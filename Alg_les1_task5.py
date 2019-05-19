@@ -4,8 +4,8 @@
 char1 = input('Введите любую букву от a до z: ')
 char2 = input('Введите вторую любую букву от а до z: ')
 
-pos1 = ord(char1) - 96
-pos2 = ord(char2) - 96
+pos1 = ord(char1) - ord('a') + 1
+pos2 = ord(char2) - ord('a') + 1
 
 length = abs(pos1 - pos2) - 1
 if length < 0:
