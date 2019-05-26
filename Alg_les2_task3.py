@@ -5,8 +5,7 @@ n = int(input('Введите натуральное число: '))
 reversed_n = 0
 
 while n > 0:
-    digit = n % 10
-    reversed_n = reversed_n * 10 + digit
+    reversed_n = reversed_n * 10 + n % 10
     n = n // 10
 
 print(f'Число обратное по порядку входящих в него цифр: {reversed_n}')

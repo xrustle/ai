@@ -5,6 +5,6 @@ n = int(input('Введите количество элементов: '))
 result = 0
 
 for i in range(n):
-    result += ((-1) ** i) / (2 ** i)
+    result += (-1/2) ** i
 
 print(f'Сумма: {result}')
