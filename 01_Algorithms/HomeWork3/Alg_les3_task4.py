@@ -8,13 +8,15 @@ MAX_ITEM = 100
 lst = [random.randint(MIN_ITEM, MAX_ITEM) for _ in range(SIZE)]
 print(lst)
 
-s = set()  # Сюда буду складывать все различные числа встречающиеся в массиве, чтобы потом сравнивать с ним
+# Сюда буду складывать все различные числа встречающиеся в массиве, чтобы потом сравнивать с ним
+s = set()
 
 max_n = lst[0]
 max_c = 1
 for i in range(0, len(lst) - 1):
     n = lst[i]
-    counter = 1  # Счетчик числа вхождений числа
+    # Счетчик числа вхождений числа
+    counter = 1
     if n in s:
         continue
     for j in range(i + 1, len(lst)):
@@ -25,5 +27,4 @@ for i in range(0, len(lst) - 1):
         max_n = n
     s.add(n)
 
-print(max_c)
-print(max_n)
+print(f'Число {max_n} встречается {max_c} раз(а).')
