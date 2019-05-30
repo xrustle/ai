@@ -10,11 +10,13 @@ lst = [random.randint(MIN_ITEM, MAX_ITEM) for _ in range(SIZE)]
 print(lst)
 
 max_neg = -math.inf
-for item in lst:
+max_i = -1
+for i, item in enumerate(lst):
     if 0 > item > max_neg:
         max_neg = item
+        max_i = i
 
-if max_neg != -math.inf:
-    print(f'Максимальный отрицательный элемент: {max_neg}')
+if max_i != -1:
+    print(f'Максимальный отрицательный элемент: {max_neg}. Позиция: {max_i}')
 else:
     print('В списке нет отрицательных чисел')
