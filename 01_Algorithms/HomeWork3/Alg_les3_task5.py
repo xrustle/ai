@@ -1,15 +1,14 @@
 # В массиве найти максимальный отрицательный элемент. Вывести на экран его значение и позицию в массиве.
 
 import random
-import math
 
 SIZE = 20
-MIN_ITEM = -100
+MIN_ITEM = -1
 MAX_ITEM = 100
 lst = [random.randint(MIN_ITEM, MAX_ITEM) for _ in range(SIZE)]
 print(lst)
 
-max_neg = -math.inf
+max_neg = MIN_ITEM - 1
 max_i = -1
 for i, item in enumerate(lst):
     if 0 > item > max_neg:
