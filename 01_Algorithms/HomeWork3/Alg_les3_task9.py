@@ -2,8 +2,8 @@
 
 import random
 
-SIZE_X = 10
-SIZE_Y = 7
+SIZE_X = 5
+SIZE_Y = 5
 MIN_ITEM = 10
 MAX_ITEM = 99
 

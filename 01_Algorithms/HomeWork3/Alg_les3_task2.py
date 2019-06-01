@@ -4,7 +4,7 @@
 
 import random
 
-SIZE = 20
+SIZE = 10
 MIN_ITEM = 0
 MAX_ITEM = 100
 lst = [random.randint(MIN_ITEM, MAX_ITEM) for _ in range(SIZE)]
@@ -15,4 +15,4 @@ for i, n in enumerate(lst):
     if n % 2 == 0:
         result.append(i)
 
-print(result)
+print(f'Ответ: {result}. Нумерация с нуля')

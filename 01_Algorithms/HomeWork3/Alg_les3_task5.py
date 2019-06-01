@@ -2,8 +2,8 @@
 
 import random
 
-SIZE = 20
-MIN_ITEM = -1
+SIZE = 10
+MIN_ITEM = -100
 MAX_ITEM = 100
 lst = [random.randint(MIN_ITEM, MAX_ITEM) for _ in range(SIZE)]
 print(lst)

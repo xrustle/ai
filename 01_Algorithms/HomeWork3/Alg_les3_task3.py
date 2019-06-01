@@ -2,7 +2,7 @@
 
 import random
 
-SIZE = 20
+SIZE = 10
 MIN_ITEM = 0
 MAX_ITEM = 99
 lst = [random.randint(MIN_ITEM, MAX_ITEM) for _ in range(SIZE)]
