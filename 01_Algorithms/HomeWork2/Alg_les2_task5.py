@@ -4,12 +4,10 @@
 FIRST = 32
 LAST = 127
 
-n = 0
 s = ''
 
 for i in range(FIRST, LAST + 1):
     s += f'#{i:0>3d}: {chr(i)} '
-    n += 1
-    if n % 10 == 0:
+    if i % 10 == 1:
         s += '\n'
 print(s)
