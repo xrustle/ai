@@ -4,10 +4,7 @@
 FIRST = 32
 LAST = 127
 
-s = ''
-
 for i in range(FIRST, LAST + 1):
-    s += f'#{i:0>3d}: {chr(i)} '
+    print(f'#{i:0>3d}: {chr(i)} ', end=' ')
     if i % 10 == 1:
-        s += '\n'
-print(s)
+        print()
