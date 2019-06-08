@@ -7,30 +7,64 @@
 #
 # Второй — без использования «Решета Эратосфена».
 # Примечание. Вспомните классический способ проверки числа на простоту.
-# Пример работы программ:
-#
-# sieve(2)
-# 3
-# prime(4)
-# 7
-# sieve(5)
-# 11
-# prime(1)
-# 2
+
+import timeit
+# ----------------------------------------------------------------------------------------------------------------------
+# 1) С помощью алгоритма «Решето Эратосфена».
 
 
-def get_prime(n):
-    plist = [2]  # список простых чисел
-    num = 1
+# Сначала сама функция решета.
+def sieve_it(n):
+    primes = [i for i in range(n)]
+    primes[1] = 0
 
-    while len(plist) < n:
-        num += 2  # рассматриваем только нечетные числа, начиная с 3-х
-        for i in plist:
-            if num % i == 0:
+    for i in range(2, n):
+        if primes[i] != 0:
+            j = i + i
+            while j < n:
+                primes[j] = 0
+                j += i
+    return primes
+
+
+def sieve(n):
+    lim = n
+    primes_found = 0
+    while primes_found < n:
+        lst = sieve_it(lim)
+        for num in lst:
+            if num != 0:
+                primes_found += 1
+            if primes_found == n:
+                return num
+        lim *= 2
+        primes_found = 0
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+# 2) Метод простой поочередной проверки каждого числа на простоту
+def prime(n):
+    x = 1  # число, проверяемоу на простоту в данный момент
+    primes = [2]  # список найденных простых чисел
+    while len(primes) != n:
+        x += 2  # ограничимся только нечетными числами
+        for i in primes:
+            if x % i == 0:
                 break
         else:
-            plist.append(num)
-    return num
+            primes.append(x)
+    return primes[-1]
 
 
-# print(get_prime(1000))
+def test(func, values):
+    for i in values:
+        time = timeit.timeit('func(var)', number=100, globals={'func': func, 'var': i})
+        # print(f'{func.__name__}({i}): {time:.2f}')
+        print(f'{i}\t{time:.6f}')
+
+
+rng = [2 ** i * 5 for i in range(1, 11)]
+
+test(sieve, rng)
+test(prime, rng)
+
