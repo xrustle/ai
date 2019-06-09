@@ -12,14 +12,12 @@ from timeit import timeit
 from random import randint
 # Ниже подключение модуля twominscpp, который я написал на C++, для решения этой задачи, но можно
 # запустить и без него, тогда будут проверяться только 3 алгоритма Python из этого файла.
-# Для написания использовал официальную документацию Python и Visual Studio по написанию и тестированию
-# модулей С/С++ для Python.
 CPP_IMPORTED = False
 try:
     from twominscpp import solution4
     CPP_IMPORTED = True
 except ModuleNotFoundError:
-    print('Необходимо установить модуль с помощью python setup.py install из папки CPPModule')
+    print('Необходимо установить модуль с помощью <python setup.py install> из папки CPPModule, либо <py -m pip install .>')
 
 
 # 1. Мое решение задачи из ДЗ
