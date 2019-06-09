@@ -8,7 +8,7 @@
 # Второй — без использования «Решета Эратосфена».
 # Примечание. Вспомните классический способ проверки числа на простоту.
 
-import timeit
+from timeit import timeit
 # ----------------------------------------------------------------------------------------------------------------------
 # 1) С помощью алгоритма «Решето Эратосфена».
 
@@ -60,11 +60,11 @@ def prime(n):
 # Функция тестирования времени выполнения
 def test(func, values):
     for i in values:
-        time = timeit.timeit('func(var)', number=100, globals={'func': func, 'var': i})
+        time = timeit('func(var)', number=100, globals={'func': func, 'var': i})
         print(f'{func.__name__}({i}): {time:.6f}')
 
 
-rng = [2 ** i * 5 for i in range(1, 13)]
+rng = [2 ** i * 5 for i in range(1, 12)]
 
 test(sieve, rng)
 print()
@@ -84,7 +84,6 @@ test(prime, rng)
 # sieve(2560): 3.545443
 # sieve(5120): 6.987406
 # sieve(10240): 14.838725
-# sieve(20480): 31.528030
 
 # prime(10): 0.000613
 # prime(20): 0.001922

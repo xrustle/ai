@@ -1,44 +1,29 @@
 # Проанализировать скорость и сложность одного любого алгоритма
 # из разработанных в рамках домашнего задания первых трех уроков.
-# Примечание. Идеальным решением будет:
-# ● выбрать хорошую задачу, которую имеет смысл оценивать,
-# ● написать 3 варианта кода (один у вас уже есть),
-# ● проанализировать 3 варианта и выбрать оптимальный,
-# ● результаты анализа вставить в виде комментариев в файл с кодом,
-# ● написать общий вывод: какой из трёх вариантов лучше и почему.
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Я выбрал задачу №7 из домашнего задания к уроку 3 (Массивы. Кортежи. Множества. Списки.)
 #   В одномерном массиве целых чисел определить два наименьших элемента.
 #   Они могут быть как равны между собой (оба являться минимальными), так и различаться.
 
-# В качестве тестовых данных использовал:
-# a) массив случайных чисел 5K, 10K и 20K эдементов
-# b) также пробовал массив из чисел по порядку от 0 до 5K, от 0 до 10К и от 0 до 20К
-# с) и обратную последовательность чисел. Также три варианта.
-
 # РЕЗУЛЬТАТЫ в конце модуля
 
+from timeit import timeit
 from random import randint
-
-# a)
-# array = [randint(-1000, 1000) for i in range(5000)]
-array = [randint(-1000, 1000) for i in range(10000)]
-# array = [randint(-1000, 1000) for i in range(20000)]
-
-# b)
-# array = [i for i in range(5000)]
-# array = [i for i in range(10000)]
-# array = [i for i in range(20000)]
-
-# c)
-# array = [i for i in range(5000, -1, -1)]
-# array = [i for i in range(10000, -1, -1)]
-# array = [i for i in range(20000, -1, -1)]
+# Ниже подключение модуля twominscpp, который я написал на C++, для решения этой задачи, но можно
+# запустить и без него, тогда будут проверяться только 3 алгоритма Python из этого файла.
+# Для написания использовал официальную документацию Python и Visual Studio по написанию и тестированию
+# модулей С/С++ для Python.
+CPP_IMPORTED = False
+try:
+    from twominscpp import solution4
+    CPP_IMPORTED = True
+except ModuleNotFoundError:
+    print('Необходимо установить модуль с помощью python setup.py install из папки CPPModule')
 
 
 # 1. Мое решение задачи из ДЗ
-def solution1():
+def solution1(array):
     a = array[0]
     b = array[1]
     if a > b:
@@ -54,10 +39,10 @@ def solution1():
 
 
 # 2. Пример из разбора ДЗ 1
-def solution2():
+def solution2(array):
     min_first, min_second = (0, 1) if array[0] < array[1] else (1, 0)
 
-    for i in range(3, len(array)):
+    for i in range(2, len(array)):
         if array[i] < array[min_first]:
             spam = min_first
             min_first = i
@@ -70,7 +55,7 @@ def solution2():
 
 
 # 3. Пример из разбора ДЗ 2
-def solution3():
+def solution3(array):
     min_1 = min(array)
     array.remove(min_1)
     min_2 = min(array)
@@ -78,43 +63,58 @@ def solution3():
 
 
 # ----------------------------------------------------------------------------------------------------------------------
+# Тестирование времени выполнения
+def test(func_list, values):
+    for i in values:
+        array = [randint(-1000, 1000) for i in range(i)]
+        for func in func_list:
+            test_array = array.copy()  # копирую список, потому что 3-й метод изменяет список
+            time = timeit('func(var)', number=100, globals={'func': func, 'var': test_array})
+            print(f'{func.__name__}({i}): {time:.6f}')
+
+
+# Список проверяемых алгоритмов
+funcs = [solution1, solution2, solution3]
+
+# 4. В список проверяемых алгоритмов добавляем метод из модуля, написанного на C++, при условии,
+# что модуль успешно подключился
+if CPP_IMPORTED:
+    funcs.append(solution4)
+
+# Входные данные для проверки [5K, 10K, 20K ... - длины списков
+rng = [2 ** i * 5000 for i in range(5)]
+
+
+test(funcs, rng)
+
+
+# ----------------------------------------------------------------------------------------------------------------------
 # РЕЗУЛЬТАТЫ
 
-# a) Случайные числа
-# solution 1, 5K чисел: 100 loops, best of 5: 562 usec per loop
-# solution 2, 5K чисел: 100 loops, best of 5: 759 usec per loop
-# solution 3, 5K чисел: 100 loops, best of 5: 203 usec per loop
-# solution 1, 10K чисел: 100 loops, best of 5: 1.14 msec per loop
-# solution 2, 10K чисел: 100 loops, best of 5: 1.53 msec per loop
-# solution 3, 10K чисел: 100 loops, best of 5: 440 usec per loop
-# solution 1, 20K чисел: 100 loops, best of 5: 2.29 msec per loop
-# solution 2, 20K чисел: 100 loops, best of 5: 3.16 msec per loop
-# solution 3, 20K чисел: 100 loops, best of 5: 887 usec per loop
-
-# b) Возрастающая последовательность целых чисел по порядку от нуля
-# solution 1, 5K чисел: 100 loops, best of 5: 468 usec per loop
-# solution 2, 5K чисел: 100 loops, best of 5: 717 usec per loop
-# solution 3, 5K чисел: 100 loops, best of 5: 147 usec per loop
-# solution 1, 10K чисел: 100 loops, best of 5: 949 usec per loop
-# solution 2, 10K чисел: 100 loops, best of 5: 1.39 msec per loop
-# solution 3, 10K чисел: 100 loops, best of 5: 308 usec per loop
-# solution 1, 20K чисел: 100 loops, best of 5: 1.95 msec per loop
-# solution 2, 20K чисел: 100 loops, best of 5: 2.72 msec per loop
-# solution 3, 20K чисел: 100 loops, best of 5: 630 usec per loop
-
-# c) Убывающая последовательность целых чисел по порядку до нуля
-# solution 1, 5K чисел: 100 loops, best of 5: 445 usec per loop
-# solution 2, 5K чисел: 100 loops, best of 5: 761 usec per loop
-# solution 3, 5K чисел: 100 loops, best of 5: 207 usec per loop
-# solution 1, 10K чисел: 100 loops, best of 5: 880 usec per loop
-# solution 2, 10K чисел: 100 loops, best of 5: 1.54 msec per loop
-# solution 3, 10K чисел: 100 loops, best of 5: 435 usec per loop
-# solution 1, 20K чисел: 100 loops, best of 5: 1.76 msec per loop
-# solution 2, 20K чисел: 100 loops, best of 5: 3.09 msec per loop
-# solution 3, 20K чисел: 100 loops, best of 5: 891 usec per loop
+# solution1(5000): 0.066813
+# solution2(5000): 0.108213
+# solution3(5000): 0.028061
+# solution4(5000): 0.008197
+# solution1(10000): 0.179668
+# solution2(10000): 0.243169
+# solution3(10000): 0.055955
+# solution4(10000): 0.016117
+# solution1(20000): 0.267227
+# solution2(20000): 0.404253
+# solution3(20000): 0.113168
+# solution4(20000): 0.031986
+# solution1(40000): 0.532687
+# solution2(40000): 0.806809
+# solution3(40000): 0.224670
+# solution4(40000): 0.064093
+# solution1(80000): 1.087782
+# solution2(80000): 1.530153
+# solution3(80000): 0.453038
+# solution4(80000): 0.128654
 
 # ВЫВОД
-# Скорость работы всех трех алгоритмов с ростом числа элементов массива растет практически линейно.
-# Можно грубо оценить сложность как O(n).
-#
-# А лучшим алгоритмом оказался №3 с использвоанием стандартной функции min и метода remove
+# Скорость работы всех алгоритмов с ростом числа элементов массива растет ~линейно.
+# Можно оценить сложность как O(n), так как во всех методах мы перебираем полный набор чисел из массива n.
+# Но скорости отличаются в константу раз из-за разного количества операций при полном проходе по числам массива
+
+# Лучшим алгоритмом естественно оказался №4 из модуля С++
