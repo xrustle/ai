@@ -15,10 +15,11 @@ from timeit import timeit
 
 # Сначала сама функция решета.
 def sieve_it(n):
-    primes = [i for i in range(n)]
+    primes = [i for i in range(0, n)]
+    primes[0] = 0
     primes[1] = 0
 
-    for i in range(2, n):
+    for i in range(1, n):
         if primes[i] != 0:
             j = i + i
             while j < n:
@@ -28,6 +29,8 @@ def sieve_it(n):
 
 
 def sieve(n):
+    if n == 1:
+        return 2
     lim = n
     primes_found = 0
     while primes_found < n:
@@ -64,11 +67,12 @@ def test(func, values):
         print(f'{func.__name__}({i}): {time:.6f}')
 
 
-rng = [2 ** i * 5 for i in range(1, 12)]
+if __name__ == '__main__':
+    rng = [2 ** i * 5 for i in range(1, 12)]
 
-test(sieve, rng)
-print()
-test(prime, rng)
+    test(sieve, rng)
+    print()
+    test(prime, rng)
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Пример тестирования:
