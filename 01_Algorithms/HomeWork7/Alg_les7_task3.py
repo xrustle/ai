@@ -35,6 +35,6 @@ def median(array):
 
 
 if __name__ == '__main__':
-    arr = [randint(0, 100) for _ in range(2 * M)]
+    arr = [randint(0, 100) for _ in range(2 * M + 1)]
     print(arr)
     print(f'Медиана: {median(arr)}')
